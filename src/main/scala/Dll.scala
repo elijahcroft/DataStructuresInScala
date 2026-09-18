@@ -16,6 +16,8 @@
 // toArray / toVector — convert to another structure.
 
 
+package datastructures
+
 class DLL[T]{
     protected var size_ = 0
 

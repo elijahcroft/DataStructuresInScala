@@ -14,28 +14,30 @@
 // top() — alias for peek().
 // bottom() — view the oldest element directly.
 
+package datastructures
+
 import scala.reflect.ClassTag
 
 class Stack[T : ClassTag]{
-    var data = new myVector[T](8)
+    var data = new DynamicArray[T]
 
     def push(elem: T): Unit = {
         data.pushBack(elem)
     }
     def pop(): T = {
-        val popped = data(data.getSize - 1)
+        val popped = data(data.size - 1)
         data.popBack()
         popped
     }
     def peek(): T = {
-        val top = data(data.getSize - 1)
+        val top = data(data.size - 1)
         top
     }
     def isEmpty(): Boolean = {
         return data.isEmpty 
     }
     def size(): Int = {
-        val stackSize = data.getSize
+        val stackSize = data.size
         stackSize
     }
     def clear(): Unit = {
