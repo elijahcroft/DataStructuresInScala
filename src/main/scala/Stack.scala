@@ -1,54 +1,25 @@
-// ⚙️ Core Stack Methods
-
-// push(element) — add an element to the top of the stack.
-// pop() — remove and return the top element.
-// peek() — return (but don’t remove) the top element.
-// isEmpty() — true if stack has no elements.
-// size() — return the number of elements.
-// clear() — remove all elements.
-
-// 🧠 Optional / Advanced
-// toArray() — return all elements as an Array or List.
-// contains(element) — check if an element exists.
-// printStack() — show all elements top → bottom (for debugging).
-// top() — alias for peek().
-// bottom() — view the oldest element directly.
-
 package datastructures
 
 import scala.reflect.ClassTag
 
-class Stack[T : ClassTag]{
-    var data = new DynamicArray[T]
+/** LIFO stack backed by a [[DynamicArray]]. All operations are amortized O(1). */
+class Stack[T: ClassTag]:
+  private val data = DynamicArray[T]()
 
-    def push(elem: T): Unit = {
-        data.pushBack(elem)
-    }
-    def pop(): T = {
-        val popped = data(data.size - 1)
-        data.popBack()
-        popped
-    }
-    def peek(): T = {
-        val top = data(data.size - 1)
-        top
-    }
-    def isEmpty(): Boolean = {
-        return data.isEmpty 
-    }
-    def size(): Int = {
-        val stackSize = data.size
-        stackSize
-    }
-    def clear(): Unit = {
-        if(this.size() == 0){
-            return
-        }else{
-            pop()
-            clear()
-        }
+  def push(elem: T): Unit = data.pushBack(elem)
 
-    }
+  /** Remove and return the top element, or `None` if empty. */
+  def pop(): Option[T] = data.popBack()
 
+  /** The top element without removing it, or `None` if empty. */
+  def peek: Option[T] = data.last
 
-}
+  def isEmpty: Boolean = data.isEmpty
+  def size: Int = data.size
+  def contains(elem: T): Boolean = data.contains(elem)
+  def clear(): Unit = data.clear()
+
+  /** Elements from top to bottom. */
+  def toList: List[T] = data.toList.reverse
+
+  override def toString: String = toList.mkString("Stack(", ", ", ")")
